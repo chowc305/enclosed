@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Enclosed</title>
+  <meta name="description" content="Enclosed: a digital archive of stripes photographed across Chelsea, Flatiron and Greenwich Village.">
+  <link rel="preload" href="GT-Planar-Regular.otf" as="font" type="font/otf" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Top bar: session readouts -->
+  <header class="topbar">
+    <a class="back" id="back-link" href="#" hidden>&larr; Map</a>
+    <span class="tb-session">Viewing session <span id="session-time">00:00:00</span></span>
+    <span class="tb-count"><span id="viewed-count">0</span> locations viewed</span>
+    <span class="tb-last">Last viewed <span id="last-viewed">&mdash;</span></span>
+  </header>
+
+  <!-- Left column -->
+  <aside class="sidebar">
+    <h1 class="title">Enclosed</h1>
+
+    <dl class="meta">
+      <dt>NYC</dt>
+      <dd>Chelsea<br>Flatiron<br>Greenwich Village</dd>
+    </dl>
+
+    <nav class="nav" aria-label="Main">
+      <a href="#collection">Collection</a>
+      <a href="#unfolded">Unfolded</a>
+      <a href="#about">About</a>
+    </nav>
+
+    <!-- Details for the selected pin -->
+    <section class="panel" id="panel" aria-label="Location details" hidden>
+      <button type="button" class="panel-close" id="panel-close" aria-label="Close">&times;</button>
+      <h2 class="panel-title" id="panel-title"></h2>
+      <div class="panel-img empty" id="panel-img"></div>
+      <dl class="panel-meta">
+        <dt>Location</dt><dd id="panel-loc"></dd>
+        <dt>Time</dt><dd id="panel-time"></dd>
+        <dt>Date</dt><dd id="panel-date"></dd>
+      </dl>
+      <div class="panel-pager">
+        <button type="button" id="panel-prev" aria-label="Previous location">&lt;</button>
+        <span id="panel-count">1/23</span>
+        <button type="button" id="panel-next" aria-label="Next location">&gt;</button>
+      </div>
+    </section>
+  </aside>
+
+  <!-- Map -->
+  <main class="map" id="map" aria-label="Map of Chelsea, Flatiron and Greenwich Village">
+    <svg class="map-svg" id="map-svg" viewBox="0 0 1430 1100" preserveAspectRatio="xMinYMin meet" aria-hidden="true">
+      <defs>
+        <!-- soften the map's outer edges so panning past them fades out instead of cutting off -->
+        <linearGradient id="fade-x" x1="0" x2="1" y1="0" y2="0">
+          <stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset="0.04" stop-color="#fff"/>
+          <stop offset="0.96" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/>
+        </linearGradient>
+        <linearGradient id="fade-y" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset="0.05" stop-color="#fff"/>
+          <stop offset="0.95" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/>
+        </linearGradient>
+        <mask id="mask-x" maskUnits="userSpaceOnUse" x="0" y="0" width="1430" height="1100"><rect width="1430" height="1100" fill="url(#fade-x)"/></mask>
+        <mask id="mask-y" maskUnits="userSpaceOnUse" x="0" y="0" width="1430" height="1100"><rect width="1430" height="1100" fill="url(#fade-y)"/></mask>
+      </defs>
+      <rect x="-5000" y="-5000" width="11430" height="11100" fill="#0f0f0f"/>
+      <g mask="url(#mask-x)"><g mask="url(#mask-y)"><g id="map-art"></g></g></g>
+    </svg>
+    <!-- Photo pins are placed here by script.js -->
+    <div class="pin-layer" id="pins"></div>
+
+    <div class="map-controls">
+      <button type="button" id="zoom-in" aria-label="Zoom in">+</button>
+      <button type="button" id="zoom-out" aria-label="Zoom out">&minus;</button>
+      <button type="button" id="zoom-all" class="wide" aria-label="Show all locations">All</button>
+    </div>
+
+    <!-- Scale bar: width and labels follow the zoom level -->
+    <div class="scale" id="scale" aria-hidden="true">
+      <div class="scale-labels"></div>
+      <div class="scale-bar">
+        <i style="left:0%"></i>
+        <i style="left:25%"></i>
+        <i style="left:50%"></i>
+        <i style="left:75%"></i>
+        <i style="left:100%"></i>
+      </div>
+    </div>
+  </main>
+
+  <!-- About -->
+  <section class="about" id="about" aria-label="About" hidden>
+    <div class="about-text">
+      <p>Enclosed is a publication by Chloe Chow documenting a collection of stripes found throughout Manhattan, primarily in Chelsea. Inspired by Michel Foucault&rsquo;s writing on the Panopticon and his idea of &ldquo;power of mind over mind,&rdquo; these everyday lines: gates, fences, vents, and barriers, become visual symbols of control, restriction, and surveillance.</p>
+      <p>Enclosed looks at how surveillance can shape our behavior even when we are not actively aware of being watched. By mapping the exact locations, times, and paths behind each photograph, this digital archive turns my movement through the city into something that can be traced and observed. The viewer takes on the role of the watcher, reconstructing my behavior through the information I leave behind.</p>
+    </div>
+
+    <figure class="slideshow" id="slideshow" aria-roledescription="carousel" aria-label="Photographs of the publication">
+      <div class="slides">
+        <img class="slide is-current" src="about-01.jpg" alt="The accordion book unfolded in a wave, showing striped photographs">
+        <img class="slide" src="about-02.jpg" alt="The accordion book standing open in a star shape">
+        <img class="slide" src="about-03.jpg" alt="The black inside pages with the Foucault quote printed across the folds">
+        <img class="slide" src="about-04.jpg" alt="The closed accordion book with Enclosed on the cover">
+      </div>
+      <button type="button" class="slide-arrow prev" id="slide-prev" aria-label="Previous photo">&lt;</button>
+      <button type="button" class="slide-arrow next" id="slide-next" aria-label="Next photo">&gt;</button>
+      <span class="slide-count" id="slide-count" aria-live="polite">1/4</span>
+    </figure>
+    <p class="about-caption">Enclosed, Accordion Book, Chloe Chow, 2026</p>
+  </section>
+
+  <!-- Unfolded: the photographs as one continuous strip that loops, with no edge to reach -->
+  <section class="steps" id="steps" aria-label="Unfolded" hidden>
+    <div class="steps-track" id="steps-track" tabindex="0">
+      <!-- photo panels are added by steps.js -->
+    </div>
+    <div class="steps-intro" id="steps-intro">
+      <p class="steps-label">Unfolded</p>
+      <p class="steps-hint">Scroll &rarr;</p>
+    </div>
+    <div class="steps-caption">
+      <span id="steps-index">00 / 00</span>
+      <span id="steps-place"></span>
+    </div>
+  </section>
+
+  <script src="collection.js"></script>
+  <script src="script.js"></script>
+  <script src="steps.js"></script>
+  <script src="about.js"></script>
+</body>
+</html>
