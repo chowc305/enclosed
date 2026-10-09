@@ -31,4 +31,5 @@ const COLLECTION = [
   { title: "Car Vent",              date: "2026-09-02T11:37", place: "Flatiron",          lat: 40.74000, lng: -73.99699, thumb: "thumb-car-vent.jpg", image: "full-car-vent.jpg" },
   { title: "Patio Fence",  date: "2026-09-02T17:25", place: "Chelsea",           lat: 40.74219, lng: -73.99880, thumb: "thumb-building-patio-fence.jpg", image: "full-building-patio-fence.jpg" },
   { title: "Street Drain",          date: "2026-09-03T13:51", place: "Chelsea",           lat: 40.74156, lng: -74.00108, thumb: "thumb-street-drain.jpg", image: "full-street-drain.jpg" },
+  { title: "Street Marks", date: "2026-09-03T13:49", place: "Chelsea", lat: 40.74225, lng: -74.00056, thumb: "street-marks/thumb-street-marks.jpg", image: "street-marks/full-street-marks.jpg" },
 ];
